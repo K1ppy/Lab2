@@ -18,7 +18,8 @@ public class Main {
             if (m < 1) {
                 throw new InvalidFormatException("m should be natural");
             }
-            int minColumn = minimumColumn(n, m);
+            int matrix[][] = generateMatrix(n, m);
+            int minColumn = minimumColumn(matrix, n, m);
             if (minColumn == -1) {
                 throw new InvalidFormatException("Check input settings :");
             }
@@ -28,10 +29,10 @@ public class Main {
         }
     }
 
-    public static int minimumColumn(int n, int m) {
+    public static int[][] generateMatrix(int n, int m) {
         int[][] matrix = new int[n][m];
         int l = 1; //границы диапозона рандома
-        int r = 10;
+        int r = 5;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 matrix[i][j] = (int) (Math.random() * r) + l;
@@ -44,6 +45,10 @@ public class Main {
             }
             System.out.print("\n");
         }
+        return matrix;
+    }
+
+    public static int minimumColumn(int[][] matrix, int n, int m) {
         int flagMin1 = 0;
         int flagNumber = 0;
         int min1 = 0;
@@ -52,10 +57,10 @@ public class Main {
             int pr = 1;
             flagNumber = 0;
             for (int j = 0; j < n; j++) {
-                if (Math.abs(matrix[i][j]) > n) {
+                if (Math.abs(matrix[j][i]) > n) {
                     flagNumber = 1;
                 }
-                pr *= matrix[i][j];
+                pr *= matrix[j][i];
             }
             if (flagNumber == 0) {
                 if (flagMin1 == 0) {
@@ -70,6 +75,6 @@ public class Main {
                 }
             }
         }
-        return index;
+        return index + 1;
     }
 }
